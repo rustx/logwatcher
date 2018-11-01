@@ -1,0 +1,13 @@
+language: go
+
+go:
+  - 1.8
+
+before_install:
+  - go get -t ./...
+  - go get github.com/mattn/goveralls
+
+script:
+  - go test -v ./... --covermode=count -coverprofile=count.out
+  - go tool cover -func=count.out
+  - $GOPATH/bin/goveralls -coverprofile=count.out -service=travis-ci
